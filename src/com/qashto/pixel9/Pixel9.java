@@ -22,7 +22,7 @@ public class Pixel9 extends PApplet {
 	}
 
 	public void settings() {
-//		fullScreen();
+		fullScreen();
 		//use 1280 for a 13 inch MacBook, use 1920 for HD, use 4096 for UHD.
 		//use 800 for a 13 inch MacBook, use 1080 for HD, use 2160 for UHD.
 		size(280, 800, P2D);
@@ -46,7 +46,7 @@ public class Pixel9 extends PApplet {
 	OscP5 oscar;
 
 	int lineWidth = 200;
-	double speed = 10;
+	double speed = 0;
 	double jitter = .1;
 	int rateRandom = 100;
 	int rateTrail = 4;
@@ -103,17 +103,17 @@ public class Pixel9 extends PApplet {
 			for (i = (int) (frameCount % (interlaceX * (Math.random() * jitter + 1))) ; i < pixels.length; i += drawRate) {
 				x = (i % pixelWidth);
 				y = (int) (Math.ceil(i / pixelWidth));
-				//			r = (( (x + y + frameCount*speed) % lineWidth < lineWidth/2)?255-frameCount % 200:150+frameCount % 108);
-				//			g = (( (x + frameCount*speed) % lineWidth < lineWidth/2)?255-frameCount % 230:150-frameCount % 46);
-				//			b = (( (x + frameCount*speed) % lineWidth >= lineWidth/2)?255-frameCount % 40:150+frameCount % 92);
-				r = (( (x * x * 0.00001 + y * y * lineWidth * 0.000001 + frameCount*speed) % lineWidth < lineWidth/2)?m[0]:m[1]);
-				//			g = (( (x * x * 0.001 + y * y * lineWidth * 0.000001 + frameCount*speed) % lineWidth < lineWidth/2)?m[2]:m[3]);
-				b = (( (x + y * y * y * 0.00001+ frameCount*speed) % lineWidth >= lineWidth/2)?m[4]:m[4]);
+				r = (( (x + y + frameCount*speed) % lineWidth < lineWidth/2)?255-frameCount % 200:150+frameCount % 108);
+				g = (( (x + frameCount*speed) % lineWidth < lineWidth/2)?255-frameCount % 230:150-frameCount % 46);
+				b = (( (x + frameCount*speed) % lineWidth >= lineWidth/2)?255-frameCount % 40:150+frameCount % 92);
+//				r = (( (x * x * 0.00001 + y * y * lineWidth * 0.000001 + frameCount*speed) % lineWidth < lineWidth/2)?m[0]:m[1]);
+//				g = (( (x * x * 0.001 + y * y * lineWidth * 0.000001 + frameCount*speed) % lineWidth < lineWidth/2)?m[2]:m[3]);
+//				b = (( (x + y * y * y * 0.00001+ frameCount*speed) % lineWidth >= lineWidth/2)?m[4]:m[4]);
 				c = QAUtil.replaceByte(c, 2, (int) (Math.random() * r));
 				c = QAUtil.replaceByte(c, 1, 100);
 				c = QAUtil.replaceByte(c, 0, b);
 				pixels[i] = c;
-			}	
+			}
 		}
 		//		drawRate = ogRate + (int)(Math.random() * rateRandom);
 		//		for (i = (int) (frameCount % (interlaceX * (Math.random() * jitter + 1))) ; i < pixels.length; i += drawRate) {
